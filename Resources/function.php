@@ -140,7 +140,7 @@ return mysqli_fetch_array($result);
 
 /******************************* LOGIN STUDENT ****************************/
 
-function login(){
+function login_signup(){
 
     if(isset($_POST['submit-student'])) {
 
@@ -160,7 +160,7 @@ function login(){
 
             $_SESSION['student_id'] = $row[0];
             $_SESSION['student_username'] = $row[1];
-            redirect("/student/index.php");
+            redirect("student/");
 
         }
     }
@@ -183,7 +183,7 @@ function login(){
 
             $_SESSION['teacher_id'] = $row[0];
             $_SESSION['teacher_username'] = $row[1];
-            redirect("/teacher/index.php");
+            redirect("teacher/");
 
         }
     }
@@ -206,8 +206,52 @@ function login(){
 
             $_SESSION['admin_id'] = $row[0];
             $_SESSION['admin_username'] = $row[1];
-            redirect("/admin/index.php");
+            redirect("admin/");
 
+        }
+    }
+
+    if(isset($_POST['signup'])) {
+        
+        $username       =       escape_string($_POST['username']);
+        $lastname       =       escape_string($_POST['lastname']);
+        $firstname      =       escape_string($_POST['firstname']);
+        $email          =       escape_string($_POST['email']);
+
+        $checkusername = query("SELECT * FROM student WHERE username = '{$username}'");
+        confirm($checkusername);
+
+        if(mysqli_num_rows($checkusername) == 0) {
+
+            $checkemail  =   query("SELECT * FROM student WHERE email = '{$email}'");
+            confirm($checkemail);
+
+            if(mysqli_num_rows($checkemail) == 0) {
+
+                $checkname  =   query("SELECT * FROM student WHERE lastname = '{$lastname}' AND firstname = '{$firstname}'");
+                confirm($checkname);
+    
+                if(mysqli_num_rows($checkname) == 0) {
+    
+                    $firstname      =       escape_string($_POST['firstname']);
+                    $lastname       =       escape_string($_POST['lastname']);
+                    $username       =       escape_string($_POST['username']);
+                    $password       =       escape_string($_POST['password']);
+                    $email          =       escape_string($_POST['email']);
+            
+                    $query = query("INSERT INTO student(`firstname`, `lastname`, `username`, `password`, `email`) VALUE ('{$firstname}', '{$lastname}','{$username}', '{$password}' , '{$email}')");
+                    confirm($query);
+            
+                    redirect("index.php?login&signup=registered");
+    
+                } else {
+                    redirect("index.php?login&signup=inscribe");
+                } 
+            } else {
+                redirect("index.php?login&signup=email");
+            }
+        } else {
+            redirect("index.php?login&signup=username");
         }
     }    
 }
