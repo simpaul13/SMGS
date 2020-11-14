@@ -9,6 +9,7 @@ session_start();
 
 //
 defined("DS") ? NULL : define("DS", DIRECTORY_SEPARATOR);
+defined("TEMPLATE_UPLOAD") ? NULL : define("TEMPLATE_UPLOAD", __DIR__ . DS . "../public/resources/upload");
 defined("TEMPLATE_FRONT") ? NULL : define("TEMPLATE_FRONT", __DIR__ . DS . "templates/front");
 defined("TEMPLATE_BACK") ? NULL : define("TEMPLATE_BACK", __DIR__ . DS . "templates/back");
 

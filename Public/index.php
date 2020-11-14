@@ -1,36 +1,27 @@
-<?php require_once("../resources/config.php")?>
+<?php require_once("../resources/config.php");
 
-<?php 
 
 include(TEMPLATE_FRONT . "/header.php");
 
+if($_SERVER['REQUEST_URI'] == "/schoolmanagementsystem/Public/" || $_SERVER['REQUEST_URI'] == "/schoolmanagementsystem/Public/index.php") {
+        
+    $title = "Login";
+    include(TEMPLATE_FRONT . "/test.php");
+    
+}
 
-?>
+else if(isset($_GET['login'])) {
 
+    $title = "Login";
+    include(TEMPLATE_FRONT . "/login.php");
 
-<?php 
+}
 
+else if(isset($_GET['test'])) {
+    $title = "Test";
 
+}
 
-
-    if($_SERVER['REQUEST_URI'] == "/" || $_SERVER['REQUEST_URI'] == "/index.php") {
-        include(TEMPLATE_FRONT . "/test.php");
-    }
-
-
-    /****** VIEW  ******/
-
-    if(isset($_GET['test'])) {
-        include(TEMPLATE_FRONT . "/test.php");
-    }
-    if(isset($_GET['login'])) {
-        include(TEMPLATE_FRONT . "/login.php");
-    }
-
-
-
-
-
-?>
-
-<?php include(TEMPLATE_FRONT . "/footer.php");?>
+ include(TEMPLATE_FRONT . "/footer.php");
+ 
+ 

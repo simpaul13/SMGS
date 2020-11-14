@@ -1,12 +1,11 @@
 <?php 
 
-
 login_signup();
 
 if(isset($_GET['password'])) {
 
   $password = escape_string($_GET['password']);
-  $password = null;
+  $completesignup = null;
 
 } else if (isset($_GET['signup'])) {
 
@@ -51,7 +50,7 @@ if(isset($_GET['password'])) {
                 <div class="row">
                   <div class="col-md-12">
                     <div class="d-flex justify-content-center"">
-                        <img src=" img/avatar/ninja.svg" class="rounded-circle" alt="Cinque Terre" width="180"
+                        <img src="resources/img/avatar/ninja.svg" class="rounded-circle" alt="Cinque Terre" width="180"
                       height="180">
                     </div>
                     <div class="input-group mt-3 mb-3">
@@ -82,7 +81,7 @@ if(isset($_GET['password'])) {
                 <div class="row">
                   <div class="col-md-12">
                     <div class="d-flex justify-content-center"">
-                        <img src=" img/avatar/pumpkin.svg" class="rounded-circle" alt="Cinque Terre" width="180"
+                        <img src=" resources/img/avatar/pumpkin.svg" class="rounded-circle" alt="Cinque Terre" width="180"
                       height="180">
                     </div>
                     <div class="input-group mt-3 mb-3">
@@ -111,7 +110,7 @@ if(isset($_GET['password'])) {
                 <div class="row">
                   <div class="col-md-12">
                     <div class="d-flex justify-content-center"">
-                        <img src=" img/avatar/scientist.svg" class="rounded-circle" alt="Cinque Terre" width="180"
+                        <img src="resources/img/avatar/scientist.svg" class="rounded-circle" alt="Cinque Terre" width="180"
                       height="180">
                     </div>
                     <div class="input-group mt-3 mb-3">
