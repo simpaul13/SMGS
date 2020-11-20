@@ -1,0 +1,1 @@
+<?php list_function_admin::Subject_list_A() ?>

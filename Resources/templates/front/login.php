@@ -57,13 +57,13 @@ if(isset($_GET['password'])) {
                       <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 6rem;">Username</span>
                       </div>
-                      <input type="text" name="username_student" class="form-control">
+                      <input type="text" name="username_student" class="form-control" required>
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 6rem;">Password</span>
                       </div>
-                      <input type="password" name="password_student" class="form-control">
+                      <input type="password" name="password_student" class="form-control" required>
                     </div>
                     <div class="d-flex justify-content-between form-row">
                       <button type="submit" name="submit-student" class="btn btn-primary btn-sm"
@@ -88,13 +88,13 @@ if(isset($_GET['password'])) {
                       <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 6rem;">Username</span>
                       </div>
-                      <input type="text" name="username_teacher" class="form-control">
+                      <input type="text" name="username_teacher" class="form-control" required>
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 6rem;">Password</span>
                       </div>
-                      <input type="password" name="password_teacher" class="form-control">
+                      <input type="password" name="password_teacher" class="form-control" required>
                     </div>
                     <div class="d-flex justify-content-between form-row">
                       <button type="submit" name="submit-teacher" class="btn btn-primary btn-sm"
@@ -117,13 +117,13 @@ if(isset($_GET['password'])) {
                       <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 6rem;">Username</span>
                       </div>
-                      <input type="text" name="username_admin" class="form-control">
+                      <input type="text" name="username_admin" class="form-control" required>
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 6rem;">Password</span>
                       </div>
-                      <input type="password" name="password_admin" class="form-control">
+                      <input type="password" name="password_admin" class="form-control" required>
                     </div>
                     <div class="d-flex justify-content-between form-row">
                       <button type="submit" name="submit-admin" class="btn btn-primary btn-sm"
@@ -160,31 +160,31 @@ if(isset($_GET['password'])) {
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Firstname</label>
-                <input type="text" name="firstname" class="form-control" >
+                <input type="text" name="firstname" class="form-control" required>
                </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Lastname</label>
-                <input type="text" name="lastname" class="form-control" >
+                <input type="text" name="lastname" class="form-control" required>
                </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Username</label>
-                <input type="text" name="username" class="form-control" >
+                <input type="text" name="username" class="form-control" required>
                </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Password</label>
-                <input type="password" name="password" class="form-control" >
+                <input type="password" name="password" class="form-control" required>
                </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
                 <label for="">Email</label>
-                <input type="email" name="email" class="form-control" >
+                <input type="email" name="email" class="form-control" required>
                </div>
             </div>
           </div>

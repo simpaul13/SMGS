@@ -1,3 +1,3 @@
 <?php 
-    $list_function_admin->Stundent_list(); 
+    list_function_admin::Stundent_list(); 
 ?>
