@@ -7495,7 +7495,6 @@ function Sizzle( selector, context, results, seed ) {
 					newContext = rsibling.test( selector ) && testContext( context.parentNode ) ||
 						context;
 
-					// We can use :scope instead of the ID hack if the browser
 					// supports it & if we're not changing the context.
 					if ( newContext !== context || !support.scope ) {
 
@@ -13232,7 +13231,6 @@ function curCSS( elem, name, computed ) {
 			ret = jQuery.style( elem, name );
 		}
 
-		// A tribute to the "awesome hack by Dean Edwards"
 		// Android Browser returns percentage for some values,
 		// but width seems to be reliably pixels.
 		// This is against the CSSOM draft spec:
@@ -16795,7 +16793,6 @@ jQuery.ajaxPrefilter( "script", function( s ) {
 	}
 } );
 
-// Bind script tag hack transport
 jQuery.ajaxTransport( "script", function( s ) {
 
 	// This transport only deals with cross domain or forced-by-attrs requests
