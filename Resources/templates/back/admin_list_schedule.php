@@ -1,9 +1,16 @@
 <div class="container">
     <h3>Schedule List</h3>
     <hr>
-    <div class="d-flex justify-content-end mb-2">
+    <div class="row">
+      <div class="col-md-10">
+      <input type="text" name="search_text" id="search_text" placeholder="Search by Schedule" class="form-control" />
+
+      </div>
+      <div class="col-md-1">
         <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#create"><i class="fas fa-plus-circle"></i> Create</a>
+      </div>
     </div>
+    <br>
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
             <thead>
@@ -13,16 +20,19 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-                <form action="" method="post">
+            <tbody id="result">
                 <?php 
                     list_function_admin::Schedule_list(); 
                 ?>
-                </form>
             </tbody>
         </table>
     </div>
 </div>
+
+<!-- Modal Schedule view -->
+<?php
+    list_function_admin::Subject_list_A();
+?>
 
 <!-- Modal Create Schedule -->
 <form action="" method="post">
@@ -92,12 +102,32 @@
 </form>
 
 <script>
+$('#search_text').keyup(function(){
+
+    var search = $(this).val();
+
+    if(search != '') {
+        load_data(search);
+    } else {
+        load_data();
+    }
+
+});
+
+function load_data(query) {
+
+    $.ajax({
+        url:"../../Resources/templates/back/admin_search_schedule.php",
+        method:"POST",
+        data:{query:query},
+        success:function(data) {
+            $('#result').html(data);
+        }
+    });
+
+}
 $(function(){
-
-  
-
-  $('#list').addInputArea();
-
-  
+  //add more input
+  $('#list').addInputArea();  
 });
 </script>

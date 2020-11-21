@@ -290,9 +290,7 @@ class list_function_admin {
            DELIMITER;
            echo $list_classroom;
 
-        }
-
-        elseif(mysqli_num_rows($mainquery) < 5) {
+        } elseif(mysqli_num_rows($mainquery) < 5) {
 
             while($row = fetch_array($mainquery)) {
                 $product = <<<DELIMETER
@@ -308,9 +306,9 @@ class list_function_admin {
                 echo $product;
             }
 
-        }
         
-        else {
+        
+        } else {
 
         $query = query(" SELECT * FROM classroom");
         confirm($query);
@@ -435,7 +433,31 @@ class list_function_admin {
     }
     
     public function Enrolled_list() { 
+        $query = query("SELECT
+        *
+      FROM enrollment
+        INNER JOIN student
+          ON enrollment.student_id = student.student_id
+        INNER JOIN schedule
+          ON enrollment.section_id = schedule.section_id
+        INNER JOIN section
+          ON schedule.section_id = section.section_id
+        INNER JOIN classroom
+          ON schedule.classroom_id = classroom.classroom_id
+        INNER JOIN subject
+          ON schedule.subject_id = subject.subject_id
+        GROUP BY section.section_name");
 
+        confirm($query);
+
+        if(mysqli_num_rows($query) == 0){
+            $list_classroom = <<< DELIMITER
+            <tr>
+                <th colspan="3" class="text-center bg-danger text-white"> No Result </th>
+            </tr>
+            DELIMITER;
+            echo $list_classroom;
+        }
     }
 
     public function Grade_list() {
@@ -479,7 +501,7 @@ class list_function_admin {
                     <td>{$counter}</td>
                     <td>{$row['section_name']}</td>
                     <td class="text-center">
-                    <a href="#"  class="btn btn-info btn-sm name" id=""><i class="fas fa-list"></i></a>
+                    <a href="#"  class="btn btn-info btn-sm name"  data-toggle="modal" data-target="#section{$row['section_id']}"><i class="fas fa-list"></i></a>
                     <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
                     </td>
                 </tr>
@@ -620,7 +642,7 @@ class list_function_admin {
             <td>{$counter}</td>
             <td>{$row['section_name']}</td>
             <td class="text-center">
-                <a href="#"  class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal{$row['section_id']}"><i class="fas fa-list"></i></a>
+                <a href="#"  class="btn btn-info btn-sm name"  data-toggle="modal" data-target="#section{$row['section_id']}"><i class="fas fa-list"></i></a>
                 <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
             </td>
         </tr>
@@ -634,24 +656,106 @@ class list_function_admin {
     }
 
     public function Subject_list_A() {
-       if(isset($_POST['id'])){
-           $subject_id = escape_string($_POST['id']);
-           $query = query("SELECT
-           section.section_name,
-           subject.subject_name,
-           classroom.classroom_name
-         FROM schedule
-           INNER JOIN section
-             ON schedule.section_id = section.section_id
-           INNER JOIN classroom
-             ON schedule.classroom_id = classroom.classroom_id
-           INNER JOIN subject
-             ON schedule.subject_id = subject.subject_id
-         WHERE section.section_id = ");
-           confirm($query);
 
-          
+         $query = query("SELECT
+         *
+       FROM schedule
+         INNER JOIN section
+           ON schedule.section_id = section.section_id
+         INNER JOIN classroom
+           ON schedule.classroom_id = classroom.classroom_id
+         INNER JOIN subject
+           ON schedule.subject_id = subject.subject_id
+       GROUP BY section.section_id");
+       confirm($query);
+       $counter = 1;
+
+       if(mysqli_num_rows($query) == 0){
+            $section = <<<DELIMITER
+                kopkop
+            DELIMITER;
+            echo $section;
+       } else {
+
+            while($row = fetch_array($query)) {
+
+                $section = <<<DELIMETER
+                <div class="modal fade" id="section{$row['section_id']}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Section {$row['section_name']}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Subject Name</th>
+                                            <th scope="col">Time start</th>
+                                            <th scope="col">Time end</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Room</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                DELIMETER;
+                echo $section;
+
+                $query1 = query("SELECT
+                    section.section_name,
+                    subject.subject_name,
+                    classroom.classroom_name,
+                    subject.subject_time_start,
+                    subject.subject_time_end,
+                    subject.subject_date
+                FROM schedule
+                    INNER JOIN section
+                    ON schedule.section_id = section.section_id
+                    INNER JOIN classroom
+                    ON schedule.classroom_id = classroom.classroom_id
+                    INNER JOIN subject
+                    ON schedule.subject_id = subject.subject_id
+                    WHERE section.section_id = {$row['section_id']} ");
+
+               confirm($query1);
+
+               while($roow = fetch_array($query1)) {
+                   $list_subject = <<<DELIMITER
+                   <tr>
+                       <td>$counter</td>
+                       <td>{$roow['subject_name']}</td>
+                       <td>{$roow['subject_time_start']}</td>
+                       <td>{$roow['subject_time_end']}</td>
+                       <td>{$roow['subject_date']}</td>
+                       <td>{$roow['classroom_name']}</td>
+                   </tr>
+                   DELIMITER;
+                   $counter++;
+                   echo $list_subject;
+               }
+
+                $section = <<< DELIMETER
+                                </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                DELIMETER;
+                echo $section;
+            }
        }
+
     }
 
     public function Section_list() {

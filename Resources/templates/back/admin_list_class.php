@@ -1,9 +1,17 @@
 <div class="container">
     <h3>Classroom List</h3>
     <hr>
-    <div class="d-flex justify-content-end mb-2">
+    
+    <div class="row">
+      <div class="col-md-10">
+      <input type="text" name="search_text" id="search_text" placeholder="Search by Classroom" class="form-control" />
+
+      </div>
+      <div class="col-md-1">
         <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#create"><i class="fas fa-plus-circle"></i> Create</a>
+      </div>
     </div>
+    <br>
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
             <thead>
@@ -13,10 +21,8 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-            <?php 
-                list_function_admin::class_list();
-            ?>
+            <tbody id="result">
+                <?php list_function_admin::class_list() ?>
             </tbody>
         </table>
     </div>
@@ -49,3 +55,31 @@
     </div>
   </div>
 </form>
+<script>
+
+  
+ $('#search_text').keyup(function(){
+
+  var search = $(this).val();
+
+  if(search != '') {
+   load_data(search);
+  } else {
+   load_data();
+  }
+
+ });
+
+ function load_data(query) {
+
+  $.ajax({
+   url:"../../Resources/templates/back/admin_search_classroom.php",
+   method:"POST",
+   data:{query:query},
+   success:function(data) {
+    $('#result').html(data);
+   }
+  });
+
+ }
+</script>

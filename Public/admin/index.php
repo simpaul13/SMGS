@@ -44,7 +44,9 @@ include(TEMPLATE_BACK . "/admin_header.php");
     }
     /****** LIST  ******/
 
-
+    if(isset($_GET['a'])){
+        include(TEMPLATE_BACK . "/admin_list_modal_subject.php");
+    }
 
 
 

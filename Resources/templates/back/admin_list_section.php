@@ -1,9 +1,16 @@
 <div class="container">
     <h3>Section List</h3>
     <hr>
-    <div class="d-flex justify-content-end mb-2">
+    <div class="row">
+      <div class="col-md-10">
+      <input type="text" name="search_text" id="search_text" placeholder="Search by Classroom" class="form-control" />
+
+      </div>
+      <div class="col-md-1">
         <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#create"><i class="fas fa-plus-circle"></i> Create</a>
+      </div>
     </div>
+    <br>
     <div class="table-responsive-ms">
         <table class="table table-bordered table-hover">
             <thead>
@@ -13,7 +20,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="result">
                 <?php 
                     list_function_admin::Section_list(); 
                 ?>
@@ -29,7 +36,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Add Classroom</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Add Section</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -50,3 +57,29 @@
     </div>
   </div>
 </form>
+<script>
+ $('#search_text').keyup(function(){
+
+  var search = $(this).val();
+
+  if(search != '') {
+   load_data(search);
+  } else {
+   load_data();
+  }
+
+ });
+
+ function load_data(query) {
+
+  $.ajax({
+    url:"../../Resources/templates/back/admin_search_section.php",
+   method:"POST",
+   data:{query:query},
+   success:function(data) {
+    $('#result').html(data);
+   }
+  });
+
+ }
+</script>
