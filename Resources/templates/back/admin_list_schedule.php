@@ -34,6 +34,9 @@
     list_function_admin::Subject_list_A();
 ?>
 
+<?php
+    add_function_admin::schedule_add();
+?>
 <!-- Modal Create Schedule -->
 <form action="" method="post">
     <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -50,7 +53,7 @@
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="exampleFormControlSelect1">Select Section</label>
-                            <select class="form-control" id="exampleFormControlSelect1" required>
+                            <select class="form-control" name="section_id" id="exampleFormControlSelect1" required>
                                 <option>Select</option>
                                 <?php
                                     dropdown::section();
@@ -74,13 +77,13 @@
                         <div class="list_var">
                             <div class="form-row my-2">
                                 <div class="col-md-5">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="subjectid[]" required>
+                                    <select class="form-control" id="exampleFormControlSelect1" name="subject_id_0" required>
                                         <option>Select Subject</option>
                                         <?php dropdown::subject() ?>
                                     </select>
                                 </div>
                                 <div class="col-md-5">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="classroomid[]" required>
+                                    <select class="form-control" id="exampleFormControlSelect1" name="classroom_id_0" required>
                                         <option>Select Classroom</option>
                                         <?php dropdown::classroom() ?>
                                     </select>
@@ -102,6 +105,21 @@
 </form>
 
 <script>
+
+$(document).ready(function () {
+     var i = 1;
+
+     
+     $('#add').click(function () {
+         i++;
+         $('#item_table').append('<tr id="row' + i + '"><td><select class="form-control" id="sel1" name="subjectid[]"><option value="">Choose Section</option><?php option_subject() ?></select></td><td><select class="form-control" id="sel1" name="classid[]"><option value="">Choose Section</option><?php option_class() ?></select></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+     });
+     $(document).on('click', '.btn_remove', function () {
+         var button_id = $(this).attr("id");
+         $('#row' + button_id + '').remove();
+     });
+ });
+
 $('#search_text').keyup(function(){
 
     var search = $(this).val();

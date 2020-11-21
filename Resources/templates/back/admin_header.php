@@ -13,9 +13,6 @@
     <link rel="stylesheet" href="../resources/css/admin_style.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <!-- Font Awesome JS -->
     <!-- <script src="https://kit.fontawesome.com/f14a10e293.js" crossorigin="anonymous"></script> -->

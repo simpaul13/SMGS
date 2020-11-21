@@ -49,15 +49,18 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-          <button type="submit" name="submit"  class="btn btn-primary btn-sm">Create</button>
+          <button type="submit" name="create"  class="btn btn-primary btn-sm">Create</button>
         </div>
       </div>
     </div>
   </div>
 </form>
-<script>
 
-  
+<?php
+add_function_admin::class_add()
+?>
+
+<script>
  $('#search_text').keyup(function(){
 
   var search = $(this).val();
@@ -69,6 +72,7 @@
   }
 
  });
+
 
  function load_data(query) {
 

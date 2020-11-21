@@ -419,7 +419,7 @@ class list_function_admin {
             <td>{$counter}</td>
             <td>{$row['classroom_name']}</td>
             <td class="text-center">
-                <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-danger btn-sm delete"><i class="far fa-trash-alt"></i></button>
             </td>
         </tr>
         DELIMETER;
@@ -1256,9 +1256,10 @@ class add_function_admin {
 
     public function class_add() {
         if(isset($_POST['create'])) {
-            $classroom = escape_string($_POST['classroom']);
 
-            $query = query("INSERT INTO class(classroom_name) VALUES ('$classroom')");
+            $classroom = escape_string($_POST['classroom_name']);
+
+            $query = query("INSERT INTO classroom(classroom_name) VALUES ('$classroom')");
             confirm($query);
 
             redirect("index.php?classroom=success");
@@ -1270,30 +1271,42 @@ class add_function_admin {
     }
 
     public function schedule_add() {
+        for ($i = 0; $i < count8($_POST['subject_id_0']); $i++) {
+            $query = query("INSERT INTO schedule(section_id, subject_id, class_id)
+            VALUE ('{$_POST['section_id']}', '{$_POST['subject_id_0']}', '{$_POST['classroom_id_0']}')");
 
+            confirm($query);
+
+            redirect("index.php?schedule=true");
+        }
     }
 
     public function section_add() {
         if(isset($_POST['submit'])){
-            $class_id          =        escape_string($_POST['class_id']);
-            $student_id        =        escape_string($_POST['student_id']);
-            $subject_id        =        escape_string($_POST['subject_id']);
-            $project           =        escape_string($_POST['project']);
-            $quiz              =        escape_string($_POST['quiz']);
-            $exam              =        escape_string($_POST['exam']);
-            $average           =        escape_string($_POST['average']);
+            $section_name          =        escape_string($_POST['section_name']);
           
-            $query = query("INSERT INTO grade(project, quiz, exam, average, student_id, subject_id, class_id) VALUES ('{$project}', '{$quiz}', '{$exam}', '{$average}', '{$student_id}', '{$subject_id}', '{$class_id}')");
+            $query = query("INSERT INTO section(section_name) VALUES ('{$section_name}')");
             
             confirm($query);
     
-            redirect("?studentgrade=addgrade");
+            redirect("index.php?section=success");
     
         }
     }
 
     public function subject_add() {
+        if(isset($_POST['submit'])) {
+            $subject_name       =       escape_string($_POST['subject_name']);
+            $subject_date       =       escape_string($_POST['subject_date']);
+            $subject_time_start =       escape_string($_POST['subject_time_start']);
+            $subject_time_end   =       escape_string($_POST['subject_time_end']);
+                
+            $query = query("INSERT INTO subject(subject_name, subject_date, subject_time_start, subject_time_end) VALUES ('{$subject_name}','{$subject_date}','{$subject_time_start}', '{$subject_time_end}')");
+            confirm($query);
 
+            redirect("index.php?subject=success");
+
+        }
     }
 }
 

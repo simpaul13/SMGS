@@ -3,7 +3,7 @@
     <hr>
     <div class="row">
       <div class="col-md-10">
-      <input type="text" name="search_text" id="search_text" placeholder="Search by Classroom" class="form-control" />
+      <input type="text" name="search_text" id="search_text" placeholder="Search by Section" class="form-control" />
 
       </div>
       <div class="col-md-1">
@@ -29,7 +29,9 @@
     </div>
 </div>
 
-
+<?php 
+  add_function_admin::section_add()
+?>
 <!-- Modal -->
 <form action="" method="post">
   <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -58,6 +60,8 @@
   </div>
 </form>
 <script>
+
+
  $('#search_text').keyup(function(){
 
   var search = $(this).val();
@@ -70,16 +74,16 @@
 
  });
 
- function load_data(query) {
+  function load_data(query) {
 
-  $.ajax({
-    url:"../../Resources/templates/back/admin_search_section.php",
-   method:"POST",
-   data:{query:query},
-   success:function(data) {
-    $('#result').html(data);
-   }
-  });
+    $.ajax({
+      url:"../../Resources/templates/back/admin_search_section.php",
+    method:"POST",
+    data:{query:query},
+    success:function(data) {
+      $('#result').html(data);
+    }
+    });
 
- }
+  }
 </script>

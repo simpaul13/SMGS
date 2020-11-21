@@ -31,7 +31,9 @@
         </table>
     </div>
 </div>
-
+<?php
+    add_function_admin::subject_add();
+?>
 <!-- Modal -->
 <form action="" method="post">
     <div class="modal fade bd-example-modal-lg" id="create" tabindex="-1" role="dialog"
@@ -48,11 +50,11 @@
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label for="">Subject name</label>
-                            <input type="text" name="classroom_name" class="form-control" required>
+                            <input type="text" name="subject_name" class="form-control" required>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="exampleFormControlSelect1">Example select</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
+                            <select class="form-control" name="subject_date" id="exampleFormControlSelect1">
                                 <option></option>
                                 <option value="M, W, F">M, W, F</option>
                                 <option value="T,TH, S">T,TH, S</option>
@@ -66,11 +68,11 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="">Time Start</label>
-                            <input type="text" name="classroom_name" class="form-control timepicker" id="timepicker" required readonly>
+                            <input type="text" name="subject_time_start" class="form-control timepicker" id="timepicker" required readonly>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="">Time End</label>
-                            <input type="text" name="classroom_name" class="form-control timepicker" id="timepicker" required readonly>
+                            <input type="text" name="subject_time_end" class="form-control timepicker" id="timepicker" required readonly>
                         </div>
                     </div>
                 </div>
