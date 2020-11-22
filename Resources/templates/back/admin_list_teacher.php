@@ -1,3 +1,3 @@
 <?php 
-    $list_function_admin->Teacher_list(); 
+    list_function_admin::Teacher_list(); 
 ?>
