@@ -1249,7 +1249,167 @@ class list_function_admin {
 
     public function Teacher_list() {
 
-        echo "Teacher list";
+        $mainquery = query("SELECT * FROM teacher");
+        confirm($mainquery);
+        $counter = 1;
+
+        if(mysqli_num_rows($mainquery) == 0) {
+           
+           $list_classroom = <<< DELIMITER
+            <tr>
+                <th colspan="6" class="text-center bg-danger text-white"> No Result </th>
+            </tr>
+           DELIMITER;
+           echo $list_classroom;
+
+        } elseif(mysqli_num_rows($mainquery) < 5) {
+
+            while($row = fetch_array($mainquery)) {
+                $delete = "index.php?classroom_delete={$row['classroom_id']}";
+
+                $product = <<<DELIMETER
+                <tr>
+                    <td>{$counter}</td>
+                    <td>{$row['firstname']}</td>
+                    <td>{$row['middlename']}</td>
+                    <td>{$row['lastname']}</td>
+                    <td>{$row['date_start']}</td>
+                    <td class="text-center">
+                        <a href="#" id="{$row['classroom_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                DELIMETER;
+                $counter++;
+                echo $product;
+            }
+
+        
+        
+        } else {
+
+        $query = query(" SELECT * FROM teacher");
+        confirm($query);
+
+        $rows = mysqli_num_rows($query); // Get total of mumber of rows from the database
+
+        if(isset($_GET['teacher'])){ //get page from URL if its there
+
+            $page = preg_replace('#[^0-9]#', '', $_GET['teacher']);//filter everything but numbers
+
+        } else{// If the page url variable is not present force it to be number 1
+
+            $page = 1;
+
+        }
+
+
+        $perPage = 5; // Items per page here 
+        $lastPage = ceil($rows / $perPage); // Get the value of the last page
+
+
+        // Be sure URL variable $page(page number) is no lower than page 1 and no higher than $lastpage
+
+        if($page < 1){ // If it is less than 1
+
+            $page = 1; // force if to be 1
+
+        }elseif($page > $lastPage){ // if it is greater than $lastpage
+
+            $page = $lastPage; // force it to be $lastpage's value
+
+        }
+
+        $middleNumbers = ''; // Initialize this variable
+
+        // This creates the numbers to click in between the next and back buttons
+        $sub1 = $page - 1;
+        $sub2 = $page - 2;
+        $add1 = $page + 1;
+        $add2 = $page + 2;
+       
+
+        if($page == 1){
+            
+            $middleNumbers .= '<li class="page-item active"><a class="page-link">' .$page. '</a></li>';
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher='.$add1.'">' .$add1. '</a></li>';
+
+        }elseif($page < 2 && $page < $lastPage){
+
+            $middleNumbers .= '<li class="page-item active"><a class="page-link">' .$page. '</a></li>';
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher='.$add1.'">' .$add1. '</a></li>';
+
+        } elseif ($page == $lastPage) {
+            
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher='.$sub1.'">' .$sub1. '</a></li>';
+            $middleNumbers .= '<li class="page-item active"><a class="page-link">' .$page. '</a></li>';
+
+        }elseif ($page > 2 && $page < ($lastPage -1)) {
+
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher='.$sub2.'">' .$sub2. '</a></li>';
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher='.$sub1.'">' .$sub1. '</a></li>';
+            $middleNumbers .= '<li class="page-item active"><a class="page-link">' .$page. '</a></li>';
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher='.$add1.'">' .$add1. '</a></li>';
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher='.$add2.'">' .$add2. '</a></li>';
+
+        } elseif($page > 1 && $page < $lastPage){
+
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher= '.$sub1.'">' .$sub1. '</a></li>';
+            $middleNumbers .= '<li class="page-item active"><a class="page-link">' .$page. '</a></li>';
+            $middleNumbers .= '<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?teacher='.$add1.'">' .$add1. '</a></li>';
+
+        }
+
+        // This line sets the "LIMIT" range... the 2 values we place to choose a range of rows from database in our query
+        $limit = 'LIMIT ' . ($page-1) * $perPage . ',' . $perPage;
+
+        // $query2 is what we will use to to display products with out $limit variable
+        $query2 = query(" SELECT * FROM classroom $limit");
+        confirm($query2);
+
+        $outputPagination = ""; // Initialize the pagination output variable
+
+        // If we are not on page one we place the back link
+        if($page != 1){
+
+            $prev  = $page - 1;
+            $outputPagination .='<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?classroom='.$prev.'">Back</a></li>';
+
+        }
+
+        // Lets append all our links to this variable that we can use this output pagination
+
+        $outputPagination .= $middleNumbers;
+
+        // If we are not on the very last page we the place the next link
+
+        if($page != $lastPage){
+
+            $next = $page + 1;
+            $outputPagination .='<li class="page-item"><a class="page-link" href="'.$_SERVER['PHP_SELF'].'?classroom='.$next.'">Next</a></li>';
+
+        }
+        // Remember we use query 2 below :)
+        while($row = fetch_array($query2)) {
+        $delete = "index.php?classroom_delete={$row['classroom_id']}";
+
+        $product = <<<DELIMETER
+                <tr>
+                    <td>{$counter}</td>
+                    <td>{$row['firstname']}</td>
+                    <td>{$row['middlename']}</td>
+                    <td>{$row['lastname']}</td>
+                    <td>{$row['date_start']}</td>
+                    <td class="text-center">
+                        <a href="#" id="{$row['classroom_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+        DELIMETER;
+        $counter++;
+        echo $product;
+        
+        }
+        echo "<div style='clear:both' class='text-center'><ul class='pagination justify-content-center'>{$outputPagination}</ul></div>";
+       }
 
     }
 
