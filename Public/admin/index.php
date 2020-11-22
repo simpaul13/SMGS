@@ -42,13 +42,23 @@ include(TEMPLATE_BACK . "/admin_header.php");
     else if(isset($_GET['teacher'])) {
         include(TEMPLATE_BACK . "/admin_list_teacher.php");
     }
-    /****** LIST  ******/
-
-    if(isset($_GET['a'])){
-        include(TEMPLATE_BACK . "/admin_list_modal_subject.php");
+    /****** DELETE  ******/
+    else if(isset($_GET['classroom_delete'])) {
+        include(TEMPLATE_BACK . "/admin_delete_classroom.php");
     }
 
+    else if(isset($_GET['section_delete'])) {
+        include(TEMPLATE_BACK . "/admin_delete_section.php");
+    }
 
+    else if(isset($_GET['subject_delete'])) {
+        include(TEMPLATE_BACK . "/admin_delete_subject.php");
+    }
+
+    else if(isset($_GET['schedule_delete'])) {
+        include(TEMPLATE_BACK . "/admin_delete_schedule.php");
+    }
+    
 
     
  include(TEMPLATE_BACK . "/admin_footer.php");

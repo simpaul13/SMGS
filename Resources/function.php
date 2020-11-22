@@ -293,12 +293,14 @@ class list_function_admin {
         } elseif(mysqli_num_rows($mainquery) < 5) {
 
             while($row = fetch_array($mainquery)) {
+                $delete = "index.php?classroom_delete={$row['classroom_id']}";
+
                 $product = <<<DELIMETER
                 <tr>
                     <td>{$counter}</td>
                     <td>{$row['classroom_name']}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                        <a href="#" id="{$row['classroom_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 DELIMETER;
@@ -413,15 +415,16 @@ class list_function_admin {
         }
         // Remember we use query 2 below :)
         while($row = fetch_array($query2)) {
+        $delete = "index.php?classroom_delete={$row['classroom_id']}";
 
         $product = <<<DELIMETER
-        <tr>
-            <td>{$counter}</td>
-            <td>{$row['classroom_name']}</td>
-            <td class="text-center">
-                <button type="button" class="btn btn-danger btn-sm delete"><i class="far fa-trash-alt"></i></button>
-            </td>
-        </tr>
+                <tr>
+                    <td>{$counter}</td>
+                    <td>{$row['classroom_name']}</td>
+                    <td class="text-center">
+                        <a href="#" id="{$row['classroom_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
         DELIMETER;
         $counter++;
         echo $product;
@@ -501,8 +504,8 @@ class list_function_admin {
                     <td>{$counter}</td>
                     <td>{$row['section_name']}</td>
                     <td class="text-center">
-                    <a href="#"  class="btn btn-info btn-sm name"  data-toggle="modal" data-target="#section{$row['section_id']}"><i class="fas fa-list"></i></a>
-                    <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                        <a href="#"  class="btn btn-info btn-sm name"  data-toggle="modal" data-target="#section{$row['section_id']}"><i class="fas fa-list"></i></a>
+                        <a href="#" id="{$row['schedule_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 DELIMETER;
@@ -643,7 +646,7 @@ class list_function_admin {
             <td>{$row['section_name']}</td>
             <td class="text-center">
                 <a href="#"  class="btn btn-info btn-sm name"  data-toggle="modal" data-target="#section{$row['section_id']}"><i class="fas fa-list"></i></a>
-                <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                <a href="#" id="{$row['schedule_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
             </td>
         </tr>
         DELIMETER;
@@ -783,7 +786,7 @@ class list_function_admin {
                     <td>{$counter}</td>
                     <td>{$row['section_name']}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                        <a href="#" id="{$row['section_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 DELIMETER;
@@ -904,7 +907,7 @@ class list_function_admin {
             <td>{$counter}</td>
             <td>{$row['section_name']}</td>
             <td class="text-center">
-                <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                <a href="#" id="{$row['section_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
             </td>
         </tr>
         DELIMETER;
@@ -1107,7 +1110,7 @@ class list_function_admin {
                     <td>{$row['subject_time_start']}</td>
                     <td>{$row['subject_time_end']}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                        <a href="#" id="{$row['subject_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 DELIMETER;
@@ -1231,7 +1234,7 @@ class list_function_admin {
             <td>{$row['subject_time_start']}</td>
             <td>{$row['subject_time_end']}</td>
             <td class="text-center">
-                <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                <a href="#" id="{$row['subject_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
             </td>
         </tr>
         DELIMETER;
@@ -1271,13 +1274,14 @@ class add_function_admin {
     }
 
     public function schedule_add() {
-        for ($i = 0; $i < count8($_POST['subject_id_0']); $i++) {
-            $query = query("INSERT INTO schedule(section_id, subject_id, class_id)
-            VALUE ('{$_POST['section_id']}', '{$_POST['subject_id_0']}', '{$_POST['classroom_id_0']}')");
-
-            confirm($query);
-
-            redirect("index.php?schedule=true");
+        if(isset($_POST['submit'])){
+            for($i = 0; $i < count($_POST['subject_id']); $i++) {
+                     $query = query("INSERT INTO schedule(section_id, subject_id, classroom_id)
+                     VALUE ('{$_POST['section_id']}','{$_POST['subject_id'][$i]}','{$_POST['classroom_id'][$i]}')");
+                     confirm($query);
+     
+                     redirect("index.php?schedule=success");
+            }
         }
     }
 
@@ -1311,13 +1315,9 @@ class add_function_admin {
 }
 
 class edit_function_admin {
-    
-    
+
 }
 
-class delete_function_admin {
-    
-}
 
 class dropdown {
 
@@ -1327,7 +1327,7 @@ class dropdown {
 
         while($row = fetch_array($query)){
             $section = <<<DELIMITER
-                <option valeu"{$row['section_id']}">{$row['section_name']}</option>
+                <option value="{$row['section_id']}">{$row['section_name']}</option>
             DELIMITER;
             echo $section;
         }
@@ -1339,7 +1339,7 @@ class dropdown {
 
         while($row = fetch_array($query)){
             $subject = <<<DELIMITER
-                <option valeu"{$row['subject_id']}" >{$row['subject_name']} ({$row['subject_time_start']} - {$row['subject_time_end']})</option>
+                <option value="{$row['subject_id']}" >{$row['subject_name']} ({$row['subject_time_start']} - {$row['subject_time_end']})</option>
             DELIMITER;
             echo $subject;
         }
@@ -1351,7 +1351,7 @@ class dropdown {
 
         while($row = fetch_array($query)){
             $classroom = <<<DELIMTER
-                <option valeu"{$row['classroom_id']}">{$row['classroom_name']}</option>
+                <option value="{$row['classroom_id']}">{$row['classroom_name']}</option>
             DELIMTER;
             echo $classroom;
         }

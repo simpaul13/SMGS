@@ -35,13 +35,16 @@
 ?>
 
 <?php
+    // this will go to the add schedule function
     add_function_admin::schedule_add();
+    // this will go to the delete schedule function
+    
 ?>
 <!-- Modal Create Schedule -->
 <form action="" method="post">
     <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Create Schedule</h5>
@@ -63,35 +66,37 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-md-5">
-                            <label for="">Subject</label>
-                        </div>
-                        <div class="col-md-5">
-                            <label for="">Classroom</label>
-                        </div>
-                        <div class="col-md-1">
-                            <button type="button" name="add" id="add" class="btn btn-success btn-sm list_add"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                        </div>
-                    </div>                   
-                    <div id="list">
-                        <div class="list_var">
-                            <div class="form-row my-2">
-                                <div class="col-md-5">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="subject_id_0" required>
-                                        <option>Select Subject</option>
-                                        <?php dropdown::subject() ?>
-                                    </select>
+                        <div class="col-md-12 col-ms-12">
+                            <form action="" method="post" id="insert_form">
+                                <div class="table-repsonsive">
+                                    <span id="error"></span>
+                                    <table class="table table-bordered" id="item_table">
+                                        <tr>
+                                            <th>Subject</th>
+                                            <th>Classroom</th>
+                                            <th><button type="button" name="add" id="add"
+                                                    class="btn btn-success btn-sm"><i class="fa fa-plus"
+                                                        aria-hidden="true"></i></button></th>
+                                        </tr>
+                                        <tr id="row'+i+'">
+                                            <td>
+                                                <select class="form-control" id="exampleFormControlSelect1"
+                                                    name="subject_id[]" required>
+                                                    <option>Select Subject</option><?php dropdown::subject() ?>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="exampleFormControlSelect1"
+                                                    name="classroom_id[]" required>
+                                                    <option>Select Classroom</option><?php dropdown::classroom() ?>
+                                                </select>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
-                                <div class="col-md-5">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="classroom_id_0" required>
-                                        <option>Select Classroom</option>
-                                        <?php dropdown::classroom() ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-1">
-                                    <button class="list_del btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -105,15 +110,61 @@
 </form>
 
 <script>
+$('.btn-danger').click(function () {
+   
+   var a = $(this).attr('id');
+
+   if (a != '') {
+     Swal.fire({
+       title: 'Are you sure?',
+       text: "You won't be able to revert this!",
+       icon: 'warning',
+       showCancelButton: true,
+       confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       confirmButtonText: 'Yes, delete it!'
+     }).then((result) => {
+       if (result.value) {
+         load_data(a);
+       }
+     })
+   }
+
+   function load_data(id) {
+     $.ajax({
+       url: "index.php?schedule_delete",
+       method: "POST",
+       data: {
+         id: id
+       },
+       dataType: "text",
+       success: function (id) {
+        Swal.fire({
+          title: 'Successfully Deleted',
+          text: "Successfully Delete for the database",
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            window.location.replace("index.php?schedule");
+          }
+        })
+       }
+     });
+
+   }
+ });
 
 $(document).ready(function () {
      var i = 1;
 
-     
      $('#add').click(function () {
          i++;
-         $('#item_table').append('<tr id="row' + i + '"><td><select class="form-control" id="sel1" name="subjectid[]"><option value="">Choose Section</option><?php option_subject() ?></select></td><td><select class="form-control" id="sel1" name="classid[]"><option value="">Choose Section</option><?php option_class() ?></select></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+         $('#item_table').append('<tr id="row'+i+'"><td><select class="form-control" id="exampleFormControlSelect1" name="subject_id[]" required><option>Select Subject</option><?php dropdown::subject() ?></select></td><td><select class="form-control" id="exampleFormControlSelect1" name="classroom_id[]" required><option>Select Classroom</option><?php dropdown::classroom() ?></select></td><td><button name="remove" id="' + i + '"  class="btn_remove btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td></tr>');
      });
+
      $(document).on('click', '.btn_remove', function () {
          var button_id = $(this).attr("id");
          $('#row' + button_id + '').remove();

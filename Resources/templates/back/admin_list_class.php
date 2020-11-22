@@ -61,6 +61,53 @@ add_function_admin::class_add()
 ?>
 
 <script>
+ $('.btn-danger').click(function () {
+   
+   var a = $(this).attr('id');
+
+   if (a != '') {
+     Swal.fire({
+       title: 'Are you sure?',
+       text: "You won't be able to revert this!",
+       icon: 'warning',
+       showCancelButton: true,
+       confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       confirmButtonText: 'Yes, delete it!'
+     }).then((result) => {
+       if (result.value) {
+         load_data(a);
+       }
+     })
+   }
+
+   function load_data(id) {
+     $.ajax({
+       url: "index.php?classroom_delete",
+       method: "POST",
+       data: {
+         id: id
+       },
+       dataType: "text",
+       success: function (id) {
+        Swal.fire({
+          title: 'Successfully Deleted',
+          text: "Successfully Delete for the database",
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            window.location.replace("index.php?classroom");
+          }
+        })
+       }
+     });
+
+   }
+ });
+
  $('#search_text').keyup(function(){
 
   var search = $(this).val();

@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 
-    <!-- Font Awesome JS -->
+    <!-- Sweetalert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <!-- <script src="https://kit.fontawesome.com/f14a10e293.js" crossorigin="anonymous"></script> -->
     <!-- AJAX -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
