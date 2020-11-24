@@ -10,19 +10,19 @@ if(isset($_POST['query'])) {
     
     if(mysqli_num_rows($query) == 0) {
 
-        $list_subject = <<<DELIMITER
+        $list_teacher = <<<DELIMITER
         <tr>
             <th colspan="6" class="text-center bg-danger text-white"> No Result </th>
         </tr>
         DELIMITER;
-        echo $list_subject;
+        echo $list_teacher;
     } else {
 
         while($row = fetch_array($query)) {
-            $list_subject = <<<DELIMITER
+            $list_teacher = <<<DELIMITER
 
             DELIMITER;
-            echo $list_subject;
+            echo $list_teacher;
         }
     }
 }
