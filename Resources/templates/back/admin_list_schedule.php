@@ -72,13 +72,18 @@
                                     <span id="error"></span>
                                     <table class="table table-bordered" id="item_table">
                                         <tr>
+                                            <th>Teacher</th>
                                             <th>Subject</th>
                                             <th>Classroom</th>
-                                            <th><button type="button" name="add" id="add"
-                                                    class="btn btn-success btn-sm"><i class="fa fa-plus"
-                                                        aria-hidden="true"></i></button></th>
+                                            <th><button type="button" name="add" id="add" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i></button></th>
                                         </tr>
                                         <tr id="row'+i+'">
+                                            <td>
+                                                <select class="form-control" id="exampleFormControlSelect1"
+                                                    name="teacher_id[]" required>
+                                                    <option>Select Teacher</option><?php dropdown::teacher() ?>
+                                                </select>
+                                            </td>
                                             <td>
                                                 <select class="form-control" id="exampleFormControlSelect1"
                                                     name="subject_id[]" required>
@@ -162,7 +167,7 @@ $(document).ready(function () {
 
      $('#add').click(function () {
          i++;
-         $('#item_table').append('<tr id="row'+i+'"><td><select class="form-control" id="exampleFormControlSelect1" name="subject_id[]" required><option>Select Subject</option><?php dropdown::subject() ?></select></td><td><select class="form-control" id="exampleFormControlSelect1" name="classroom_id[]" required><option>Select Classroom</option><?php dropdown::classroom() ?></select></td><td><button name="remove" id="' + i + '"  class="btn_remove btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td></tr>');
+         $('#item_table').append('<tr id="row'+i+'"><td><select class="form-control" id="exampleFormControlSelect1" name="teacher_id[]" required><option>Select Teacher</option><?php dropdown::teacher() ?></select></td><td><select class="form-control" id="exampleFormControlSelect1" name="subject_id[]" required><option>Select Subject</option><?php dropdown::subject() ?></select></td><td><select class="form-control" id="exampleFormControlSelect1" name="classroom_id[]" required><option>Select Classroom</option><?php dropdown::classroom() ?></select></td><td><button name="remove" id="' + i + '"  class="btn_remove btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td></tr>');
      });
 
      $(document).on('click', '.btn_remove', function () {
