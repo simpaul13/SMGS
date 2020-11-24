@@ -1265,7 +1265,7 @@ class list_function_admin {
         } elseif(mysqli_num_rows($mainquery) < 5) {
 
             while($row = fetch_array($mainquery)) {
-                $delete = "index.php?classroom_delete={$row['classroom_id']}";
+                $delete = "index.php?classroom_delete={$row['teacher_id']}";
 
                 $product = <<<DELIMETER
                 <tr>
@@ -1275,7 +1275,7 @@ class list_function_admin {
                     <td>{$row['lastname']}</td>
                     <td>{$row['date_start']}</td>
                     <td class="text-center">
-                        <a href="#" id="{$row['classroom_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        <a href="#" id="{$row['teacher_id']}" class="btn btn-primary btn-sm"><i class="fas fa-th-list"></i></a>
                     </td>
                 </tr>
                 DELIMETER;
@@ -1390,7 +1390,7 @@ class list_function_admin {
         }
         // Remember we use query 2 below :)
         while($row = fetch_array($query2)) {
-        $delete = "index.php?classroom_delete={$row['classroom_id']}";
+        $delete = "index.php?classroom_delete={$row['teacher_id']}";
 
         $product = <<<DELIMETER
                 <tr>
@@ -1400,7 +1400,7 @@ class list_function_admin {
                     <td>{$row['lastname']}</td>
                     <td>{$row['date_start']}</td>
                     <td class="text-center">
-                        <a href="#" id="{$row['classroom_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        <a href="#" id="{$row['teacher_id']}" class="btn btn-primary btn-sm"><i class="fas fa-th-list"></i></a>
                     </td>
                 </tr>
         DELIMETER;
@@ -1517,6 +1517,17 @@ class dropdown {
         }
     }
 
+    function teacher() {
+        $query = query("SELECT * FROM teacher");
+        confirm($query);
+
+        while($row = fetch_array($query)) {
+            $teacher = <<<DELIMITER
+                <option value="{$row['teacher_id']}">{$row['lastname']}, {$row['firstname']}</option>
+            DELIMITER;
+            echo $teacher;
+        }
+    }
 }
 /***************************************************************************/
 /******************************* STUDENT FUNCTION ****************************/
