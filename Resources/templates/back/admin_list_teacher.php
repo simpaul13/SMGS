@@ -27,54 +27,40 @@
         </table>
     </div>
 </div>
-<?php
-    add_function_admin::subject_add();
-?>
+
+
 <!-- Modal -->
 <form action="" method="post">
-    <div class="modal fade bd-example-modal-lg" id="create" tabindex="-1" role="dialog"
+    <div class="modal fade bd-example-modal-lg" id="subject" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Create Subject</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Subject Hold</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label for="">Subject name</label>
-                            <input type="text" name="subject_name" class="form-control" required>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label for="exampleFormControlSelect1">Example select</label>
-                            <select class="form-control" name="subject_date" id="exampleFormControlSelect1">
-                                <option></option>
-                                <option value="M, W, F">M, W, F</option>
-                                <option value="T,TH, S">T,TH, S</option>
-                                <option value="Monday">Monday</option>
-                                <option value="Tuesday">Tuesday</option>
-                                <option value="Wednesday">Wednesday</option>
-                                <option value="Thursday">Thursday</option>
-                                <option value="Friday">Friday</option>
-                                <option value="Saturday">Saturday</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label for="">Time Start</label>
-                            <input type="text" name="subject_time_start" class="form-control timepicker" id="timepicker" required readonly>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label for="">Time End</label>
-                            <input type="text" name="subject_time_end" class="form-control timepicker" id="timepicker" required readonly>
-                        </div>
-                    </div>
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time Start</th>
+                                <th scope="col">Time End</th>
+                                <th scope="col">Classroom</th>
+                                <th scope="col">Section</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" name="submit" class="btn btn-primary btn-sm">Create</button>
                 </div>
             </div>
         </div>
@@ -82,41 +68,62 @@
 </form>
 
 <script>
+$(function () {
 
-$('#search_text').keyup(function(){
+    $('.btn-primary').click(function () {
 
-var search = $(this).val();
+        var id = $(this).attr('id');
 
-if(search != '') {
- load_data(search);
-} else {
- load_data();
-}
+        $.ajax({
+            url: "../../Resources/templates/back/admin_list_modal_teacher_subject.php",
+            method: "POST",
+            data: {
+                id: id
+            },
+            success: function (id) {
+                $('#subject').modal('show');
+                $('.list').html(id);
+            }
+        })
 
-});
+    });
+    
+    function subject_modal() {
+        $('.btn-primary').click(function () {
 
-function load_data(query) {
+            var id = $(this).attr('id');
 
-$.ajax({
-  url:"../../Resources/templates/back/admin_search_subject.php",
- method:"POST",
- data:{query:query},
- success:function(data) {
-  $('#result').html(data);
- }
-});
+            $.ajax({
+                url: "../../Resources/templates/back/admin_list_modal_teacher_subject.php",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                success: function (id) {
+                    $('#subject').modal('show');
+                    $('.list').html(id);
+                }
+            })
 
-}
+        });
+    }
 
-$(document).ready(function () {
-    $('.timepicker').timepicker({
-        timeFormat: 'h:mm p',
-        interval: 60,
-        minTime: '7',
-        maxTime: '10:00pm',
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true
+    $('#search_text').keyup(function () {
+
+        var query = $(this).val();
+
+        $.ajax({
+            url: "../../Resources/templates/back/admin_search_teacher.php",
+            method: "POST",
+            data: {
+                query: query
+            },
+            success: function (data) {
+                $('#result').html(data);
+                subject_modal();
+            }
+        });
+
     });
 });
 </script>

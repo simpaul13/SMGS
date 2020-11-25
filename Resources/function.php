@@ -704,6 +704,7 @@ class list_function_admin {
                                             <th scope="col">Time end</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Room</th>
+                                            <th scope="col">Teacher</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -711,19 +712,16 @@ class list_function_admin {
                 echo $section;
 
                 $query1 = query("SELECT
-                    section.section_name,
-                    subject.subject_name,
-                    classroom.classroom_name,
-                    subject.subject_time_start,
-                    subject.subject_time_end,
-                    subject.subject_date
-                FROM schedule
-                    INNER JOIN section
-                    ON schedule.section_id = section.section_id
-                    INNER JOIN classroom
-                    ON schedule.classroom_id = classroom.classroom_id
-                    INNER JOIN subject
-                    ON schedule.subject_id = subject.subject_id
+                *
+              FROM schedule
+                INNER JOIN section
+                  ON schedule.section_id = section.section_id
+                INNER JOIN classroom
+                  ON schedule.classroom_id = classroom.classroom_id
+                INNER JOIN subject
+                  ON schedule.subject_id = subject.subject_id
+                INNER JOIN teacher
+                  ON schedule.teacher_id = teacher.teacher_id
                     WHERE section.section_id = {$row['section_id']} ");
 
                confirm($query1);
@@ -737,6 +735,7 @@ class list_function_admin {
                        <td>{$roow['subject_time_end']}</td>
                        <td>{$roow['subject_date']}</td>
                        <td>{$roow['classroom_name']}</td>
+                       <td>{$roow['lastname']}, {$roow['firstname']}</td>
                    </tr>
                    DELIMITER;
                    $counter++;
@@ -1265,8 +1264,7 @@ class list_function_admin {
         } elseif(mysqli_num_rows($mainquery) < 5) {
 
             while($row = fetch_array($mainquery)) {
-                $delete = "index.php?classroom_delete={$row['teacher_id']}";
-
+               
                 $product = <<<DELIMETER
                 <tr>
                     <td>{$counter}</td>
@@ -1530,5 +1528,23 @@ class dropdown {
     }
 }
 /***************************************************************************/
-/******************************* STUDENT FUNCTION ****************************/
+/******************************* STUDENT FUNCTION **************************/
 /***************************************************************************/
+class list_teacher {
+
+}
+
+class add_teacher {
+
+}
+
+/***************************************************************************/
+/******************************* TEACHER FUNCTION **************************/
+/***************************************************************************/
+class list_student {
+
+}
+
+class add_student {
+
+}
