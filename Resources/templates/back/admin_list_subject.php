@@ -86,79 +86,8 @@
 </form>
 
 <script>
-$('.btn-danger').click(function () {
-   
-   var a = $(this).attr('id');
-
-   if (a != '') {
-     Swal.fire({
-       title: 'Are you sure?',
-       text: "You won't be able to revert this!",
-       icon: 'warning',
-       showCancelButton: true,
-       confirmButtonColor: '#3085d6',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Yes, delete it!'
-     }).then((result) => {
-       if (result.value) {
-         load_data(a);
-       }
-     })
-   }
-
-   function load_data(id) {
-     $.ajax({
-       url: "index.php?subject_delete",
-       method: "POST",
-       data: {
-         id: id
-       },
-       dataType: "text",
-       success: function (id) {
-        Swal.fire({
-          title: 'Successfully Deleted',
-          text: "Successfully Delete for the database",
-          icon: 'success',
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.value) {
-            window.location.replace("index.php?subject");
-          }
-        })
-       }
-     });
-
-   }
- });
-
-$('#search_text').keyup(function(){
-
-var search = $(this).val();
-
-if(search != '') {
- load_data(search);
-} else {
- load_data();
-}
-
-});
-
-function load_data(query) {
-
-$.ajax({
-  url:"../../Resources/templates/back/admin_search_subject.php",
- method:"POST",
- data:{query:query},
- success:function(data) {
-  $('#result').html(data);
- }
-});
-
-}
-
 $(document).ready(function () {
+    //Time picker
     $('.timepicker').timepicker({
         timeFormat: 'h:mm p',
         interval: 60,
@@ -168,5 +97,23 @@ $(document).ready(function () {
         dropdown: true,
         scrollbar: true
     });
+
+   //Seacher Function
+   $('#search_text').keyup(function () {
+
+     var query = $(this).val();
+
+     $.ajax({
+       url: "../../Resources/templates/back/admin_search_subject.php",
+       method: "POST",
+       data: {
+         query: query
+       },
+       success: function (data) {
+         $('#result').html(data);
+       }
+     });
+
+   });
 });
 </script>

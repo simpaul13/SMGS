@@ -115,93 +115,38 @@
 </form>
 
 <script>
-$('.btn-danger').click(function () {
-   
-   var a = $(this).attr('id');
-
-   if (a != '') {
-     Swal.fire({
-       title: 'Are you sure?',
-       text: "You won't be able to revert this!",
-       icon: 'warning',
-       showCancelButton: true,
-       confirmButtonColor: '#3085d6',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Yes, delete it!'
-     }).then((result) => {
-       if (result.value) {
-         load_data(a);
-       }
-     })
-   }
-
-   function load_data(id) {
-     $.ajax({
-       url: "index.php?schedule_delete",
-       method: "POST",
-       data: {
-         id: id
-       },
-       dataType: "text",
-       success: function (id) {
-        Swal.fire({
-          title: 'Successfully Deleted',
-          text: "Successfully Delete for the database",
-          icon: 'success',
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.value) {
-            window.location.replace("index.php?schedule");
-          }
-        })
-       }
-     });
-
-   }
- });
 
 $(document).ready(function () {
-     var i = 1;
+    //Add more input field
+    var i = 1;
 
-     $('#add').click(function () {
-         i++;
-         $('#item_table').append('<tr id="row'+i+'"><td><select class="form-control" id="exampleFormControlSelect1" name="teacher_id[]" required><option>Select Teacher</option><?php dropdown::teacher() ?></select></td><td><select class="form-control" id="exampleFormControlSelect1" name="subject_id[]" required><option>Select Subject</option><?php dropdown::subject() ?></select></td><td><select class="form-control" id="exampleFormControlSelect1" name="classroom_id[]" required><option>Select Classroom</option><?php dropdown::classroom() ?></select></td><td><button name="remove" id="' + i + '"  class="btn_remove btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td></tr>');
-     });
-
-     $(document).on('click', '.btn_remove', function () {
-         var button_id = $(this).attr("id");
-         $('#row' + button_id + '').remove();
-     });
- });
-
-$('#search_text').keyup(function(){
-
-    var search = $(this).val();
-
-    if(search != '') {
-        load_data(search);
-    } else {
-        load_data();
-    }
-
-});
-
-function load_data(query) {
-
-    $.ajax({
-        url:"../../Resources/templates/back/admin_search_schedule.php",
-        method:"POST",
-        data:{query:query},
-        success:function(data) {
-            $('#result').html(data);
-        }
+    $('#add').click(function () {
+        i++;
+        $('#item_table').append('<tr id="row' + i + '"><td><select class="form-control" id="exampleFormControlSelect1" name="teacher_id[]" required><option>Select Teacher</option><?php dropdown::teacher() ?></select></td><td><select class="form-control" id="exampleFormControlSelect1" name="subject_id[]" required><option>Select Subject</option><?php dropdown::subject() ?></select></td><td><select class="form-control" id="exampleFormControlSelect1" name="classroom_id[]" required><option>Select Classroom</option><?php dropdown::classroom() ?></select></td><td><button name="remove" id="' + i + '"  class="btn_remove btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td></tr>');
     });
 
-}
-$(function(){
-  //add more input
-  $('#list').addInputArea();  
+    $(document).on('click', '.btn_remove', function () {
+        var button_id = $(this).attr("id");
+        $('#row' + button_id + '').remove();
+    });
+
+    //Seacher Function
+    $('#search_text').keyup(function () {
+
+        var query = $(this).val();
+
+        $.ajax({
+            url: "../../Resources/templates/back/admin_search_schedule.php",
+            method: "POST",
+            data: {
+                query: query
+            },
+            success: function (data) {
+                $('#result').html(data);
+            }
+        });
+
+    });
+
 });
 </script>

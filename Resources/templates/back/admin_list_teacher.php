@@ -42,7 +42,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-borderless">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -69,7 +69,6 @@
 
 <script>
 $(function () {
-
     $('.btn-primary').click(function () {
 
         var id = $(this).attr('id');
@@ -87,7 +86,7 @@ $(function () {
         })
 
     });
-    
+
     function subject_modal() {
         $('.btn-primary').click(function () {
 

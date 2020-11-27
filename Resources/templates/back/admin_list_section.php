@@ -61,76 +61,25 @@
   </div>
 </form>
 <script>
-$('.btn-danger').click(function () {
-   
-   var a = $(this).attr('id');
+$(document).ready(function () {
+//Seacher Function
+  $('#search_text').keyup(function () {
 
-   if (a != '') {
-     Swal.fire({
-       title: 'Are you sure?',
-       text: "You won't be able to revert this!",
-       icon: 'warning',
-       showCancelButton: true,
-       confirmButtonColor: '#3085d6',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Yes, delete it!'
-     }).then((result) => {
-       if (result.value) {
-         load_data(a);
-       }
-     })
-   }
+    var query = $(this).val();
 
-   function load_data(id) {
-     $.ajax({
-       url: "index.php?section_delete",
-       method: "POST",
-       data: {
-         id: id
-       },
-       dataType: "text",
-       success: function (id) {
-        Swal.fire({
-          title: 'Successfully Deleted',
-          text: "Successfully Delete for the database",
-          icon: 'success',
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.value) {
-            window.location.replace("index.php?section");
-          }
-        })
-       }
-     });
+      $.ajax({
+        url: "../../Resources/templates/back/admin_search_section.php",
+        method: "POST",
+        data: {
+          query: query
+        },
+        success: function (data) {
+          $('#result').html(data);
+        }
+      });
 
-   }
- });
+  });
+  
+});
 
-
- $('#search_text').keyup(function(){
-
-  var search = $(this).val();
-
-  if(search != '') {
-   load_data(search);
-  } else {
-   load_data();
-  }
-
- });
-
-  function load_data(query) {
-
-    $.ajax({
-        url:"../../Resources/templates/back/admin_search_section.php",
-        method:"POST",
-        data:{query:query},
-        success:function(data) {
-        $('#result').html(data);
-      }
-    });
-
-  }
 </script>

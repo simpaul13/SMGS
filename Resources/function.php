@@ -1467,6 +1467,7 @@ class add_function_admin {
                 if(!empty($_POST['subject_date'])) {
                     if(!empty($_POST['subject_time_start'])) {
                         if(!empty($_POST['subject_time_end'])){
+        
                             $query = query("INSERT INTO subject(subject_name, subject_date, subject_time_start, subject_time_end) VALUES ('{$subject_name}','{$subject_date}','{$subject_time_start}', '{$subject_time_end}')");
                             confirm($query);
                 
