@@ -1462,12 +1462,27 @@ class add_function_admin {
             $subject_date       =       escape_string($_POST['subject_date']);
             $subject_time_start =       escape_string($_POST['subject_time_start']);
             $subject_time_end   =       escape_string($_POST['subject_time_end']);
+            
+            if(!empty($_POST['subject_name'])) {
+                if(!empty($_POST['subject_date'])) {
+                    if(!empty($_POST['subject_time_start'])) {
+                        if(!empty($_POST['subject_time_end'])){
+                            $query = query("INSERT INTO subject(subject_name, subject_date, subject_time_start, subject_time_end) VALUES ('{$subject_name}','{$subject_date}','{$subject_time_start}', '{$subject_time_end}')");
+                            confirm($query);
                 
-            $query = query("INSERT INTO subject(subject_name, subject_date, subject_time_start, subject_time_end) VALUES ('{$subject_name}','{$subject_date}','{$subject_time_start}', '{$subject_time_end}')");
-            confirm($query);
-
-            redirect("index.php?subject=success");
-
+                            redirect("index.php?subject=success");
+                        } else {
+                            echo "input subject time end";
+                        }
+                    } else {
+                        echo "input subject time start";
+                    }
+                } else {
+                    echo "input subject date";
+                }
+            } else {
+                echo "input subject name";
+            }
         }
     }
 }
