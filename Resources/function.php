@@ -505,7 +505,7 @@ class list_function_admin {
                     <td>{$row['section_name']}</td>
                     <td class="text-center">
                         <a href="#"  class="btn btn-info btn-sm name"  data-toggle="modal" data-target="#section{$row['section_id']}"><i class="fas fa-list"></i></a>
-                        <a href="#" id="{$row['schedule_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        <a href="#" id="{$row['section_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 DELIMETER;
@@ -646,7 +646,7 @@ class list_function_admin {
             <td>{$row['section_name']}</td>
             <td class="text-center">
                 <a href="#"  class="btn btn-info btn-sm name"  data-toggle="modal" data-target="#section{$row['section_id']}"><i class="fas fa-list"></i></a>
-                <a href="#" id="{$row['schedule_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                <a href="#" id="{$row['section_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
             </td>
         </tr>
         DELIMETER;
