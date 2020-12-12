@@ -25,7 +25,7 @@ if(isset($_POST["query"])) {
                <td>{$counter}</td>
                <td>{$row['section_name']}</td>
                <td class="text-center">
-                  <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                  <a href="#" id="{$row['section_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                </td>
             </tr>
          DELIMETER;

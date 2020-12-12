@@ -28,7 +28,7 @@ if(isset($_POST["query"])) {
              <td>{$row['subject_time_start']}</td>
              <td>{$row['subject_time_end']}</td>
              <td class="text-center">
-                 <button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                  <a href="#" id="{$row['subject_id']}" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
              </td>
          </tr>
          DELIMETER;

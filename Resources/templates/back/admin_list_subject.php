@@ -115,5 +115,42 @@ $(document).ready(function () {
      });
 
    });
+
+    //Delete function
+    $(document).on('click', '.btn-danger', function () {
+        var id = $(this).attr("id");
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            $.ajax({
+                url: "index.php?subject_delete",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Subject have been Deleted',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.replace("index.php?subject");
+                            }
+                        })
+                    }
+                }
+            });
+        })
+    });
 });
 </script>
