@@ -57,7 +57,7 @@
                         <div class="col-md-12 form-group">
                             <label for="exampleFormControlSelect1">Select Section</label>
                             <select class="form-control" name="section_id" id="exampleFormControlSelect1" required>
-                                <option>Select</option>
+                                <option value="">Select</option>
                                 <?php
                                     dropdown::section();
                                 ?>
@@ -81,19 +81,19 @@
                                             <td>
                                                 <select class="form-control" id="exampleFormControlSelect1"
                                                     name="teacher_id[]" required>
-                                                    <option>Select Teacher</option><?php dropdown::teacher() ?>
+                                                    <option value="">Select Teacher</option><?php dropdown::teacher() ?>
                                                 </select>
                                             </td>
                                             <td>
                                                 <select class="form-control" id="exampleFormControlSelect1"
                                                     name="subject_id[]" required>
-                                                    <option>Select Subject</option><?php dropdown::subject() ?>
+                                                    <option value="">Select Subject</option><?php dropdown::subject() ?>
                                                 </select>
                                             </td>
                                             <td>
                                                 <select class="form-control" id="exampleFormControlSelect1"
                                                     name="classroom_id[]" required>
-                                                    <option>Select Classroom</option><?php dropdown::classroom() ?>
+                                                    <option value="">Select Classroom</option><?php dropdown::classroom() ?>
                                                 </select>
                                             </td>
                                             <td>
