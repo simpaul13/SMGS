@@ -62,6 +62,10 @@ include(TEMPLATE_BACK . "/admin_header.php");
         include(TEMPLATE_BACK . "/admin_delete_schedule.php");
     }
 
+    else if(isset($_GET['schedule_delete_subject'])) {
+        include(TEMPLATE_BACK . "/admin_delete_schedule_subject.php");
+    }
+
     /****** MODAL  ******/
     else if(isset($_GET['modal_teacher'])) {
         include(TEMPLATE_BACK . "/admin_list_modal_teacher_subject.php");

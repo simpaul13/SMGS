@@ -148,7 +148,7 @@ $(document).ready(function () {
 
     });
 
-    //Delete function
+    //Delete function section
     $(document).on('click', '.btn-danger', function () {
         var id = $(this).attr("id");
 
@@ -185,5 +185,41 @@ $(document).ready(function () {
         })
     });
 
+    //Delete function subject
+    $(document).on('click', '.btn-subject', function () {
+        var id = $(this).attr("id");
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            $.ajax({
+                url: "index.php?schedule_delete_subject",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Classroom have been Deleted',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.replace("index.php?schedule");
+                            }
+                        })
+                    }
+                }
+            });
+        })
+    });
 });
 </script>

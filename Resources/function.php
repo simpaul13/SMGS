@@ -671,7 +671,6 @@ class list_function_admin {
            ON schedule.subject_id = subject.subject_id
        GROUP BY section.section_id");
        confirm($query);
-       $counter = 1;
 
        if(mysqli_num_rows($query) == 0){
             $section = <<<DELIMITER
@@ -705,6 +704,7 @@ class list_function_admin {
                                             <th scope="col">Date</th>
                                             <th scope="col">Room</th>
                                             <th scope="col">Teacher</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -725,8 +725,10 @@ class list_function_admin {
                     WHERE section.section_id = {$row['section_id']} ");
 
                confirm($query1);
+               $counter = 1;
 
                while($roow = fetch_array($query1)) {
+
                    $list_subject = <<<DELIMITER
                    <tr>
                        <td>$counter</td>
@@ -736,6 +738,9 @@ class list_function_admin {
                        <td>{$roow['subject_date']}</td>
                        <td>{$roow['classroom_name']}</td>
                        <td>{$roow['lastname']}, {$roow['firstname']}</td>
+                       <td>
+                            <a href="#" id="{$row['schedule_id']}" class="btn btn-danger btn-sm btn-subject"><i class="far fa-trash-alt"></i></a>
+                       </td>
                    </tr>
                    DELIMITER;
                    $counter++;
