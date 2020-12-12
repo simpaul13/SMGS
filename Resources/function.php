@@ -1434,11 +1434,61 @@ class add_function_admin {
     public function schedule_add() {
         if(isset($_POST['submit'])){
             for($i = 0; $i < count($_POST['subject_id']); $i++) {
-                     $query = query("INSERT INTO schedule(section_id, subject_id, classroom_id)
-                     VALUE ('{$_POST['section_id']}','{$_POST['subject_id'][$i]}','{$_POST['classroom_id'][$i]}')");
-                     confirm($query);
-     
-                     redirect("index.php?schedule=success");
+                
+                // echo $_POST['subject_id'][$i] . "<br>";
+                // echo $_POST['teacher_id'][$i] . "<br>";
+                // echo $_POST['classroom_id'][$i] . "<br>";
+
+                $querycheckerfirst = query("SELECT * FROM schedule WHERE section_id = '{$_POST['section_id']}' AND subject_id = '{$_POST['subject_id'][$i]}' AND classroom_id = '{$_POST['classroom_id'][$i]}' AND teacher_id = '{$_POST['teacher_id'][$i]}'");
+                confirm($querycheckerfirst);
+
+                if(mysqli_num_rows($querycheckerfirst) == 0) {
+
+                    $querycheckersecond = query("SELECT * FROM schedule WHERE subject_id = '{$_POST['subject_id'][$i]}' AND classroom_id = '{$_POST['classroom_id'][$i]}' AND teacher_id = '{$_POST['teacher_id'][$i]}'");
+                    confirm($querycheckersecond);
+                    
+                    if(mysqli_num_rows($querycheckersecond) == 0) {
+
+                        $querycheckerthird = query("SELECT * FROM schedule WHERE subject_id = '{$_POST['subject_id'][$i]}' AND teacher_id = '{$_POST['teacher_id']}'");
+                        confirm($querycheckerthird);
+
+                        if(mysqli_num_rows($querycheckerthird) == 0) {
+                            
+                            $query = query("INSERT INTO schedule(section_id, subject_id, classroom_id, teacher_id)
+                            VALUE ('{$_POST['section_id']}','{$_POST['subject_id'][$i]}','{$_POST['classroom_id'][$i]}', '{$_POST['teacher_id'][$i]}')");
+                            confirm($query);
+            
+                            redirect("index.php?schedule=success");
+
+                        } else {
+                            echo "<script>
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'The teacher you have Schedule With the same Subject and Room'
+                                    })
+                                  </script>";
+                        }
+
+                    } else {
+                        echo "<script>
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'The teacher you have Schedule With the same Subject and Room'
+                                    })
+                                </script>";
+                    }
+
+                } else {
+                    echo "<script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Section Already Exists'
+                            })
+                          </script>";
+                }
             }
         }
     }
