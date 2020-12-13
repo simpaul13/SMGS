@@ -48,12 +48,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="index.php?enrolled">
-                        <i class="fal fa-edit"></i>
-                        Enrolled
-                    </a>
-                </li>
-                <li>
                     <a href="index.php?section">
                         <i class="fas fa-list"></i>
                         Section
