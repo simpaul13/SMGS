@@ -21,7 +21,9 @@
     <!-- AJAX -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="../resources/js/main.js"></script>
-
+<script>
+    
+</script>
 </head>
 <body>
     <div class="wrapper">
