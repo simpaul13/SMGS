@@ -9,8 +9,6 @@
 
 
 include(TEMPLATE_BACK . "/admin_header.php");
-
-    /****** LIST  ******/
     if(isset($_GET['classroom'])) {
         include(TEMPLATE_BACK . "/admin_list_class.php");
     }
@@ -42,38 +40,6 @@ include(TEMPLATE_BACK . "/admin_header.php");
     else if(isset($_GET['teacher'])) {
         include(TEMPLATE_BACK . "/admin_list_teacher.php");
     }
-
-
-    
-    /****** DELETE  ******/
-    else if(isset($_GET['classroom_delete'])) {
-        include(TEMPLATE_BACK . "/admin_delete_classroom.php");
-    }
-
-    else if(isset($_GET['section_delete'])) {
-        include(TEMPLATE_BACK . "/admin_delete_section.php");
-    }
-
-    else if(isset($_GET['subject_delete'])) {
-        include(TEMPLATE_BACK . "/admin_delete_subject.php");
-    }
-
-    else if(isset($_GET['schedule_delete'])) {
-        include(TEMPLATE_BACK . "/admin_delete_schedule.php");
-    }
-
-    else if(isset($_GET['schedule_delete_subject'])) {
-        include(TEMPLATE_BACK . "/admin_delete_schedule_subject.php");
-    }
-
-    /****** MODAL  ******/
-    else if(isset($_GET['modal_teacher'])) {
-        include(TEMPLATE_BACK . "/admin_list_modal_teacher_subject.php");
-    }
-
-
-    
-
     
  include(TEMPLATE_BACK . "/admin_footer.php");
  

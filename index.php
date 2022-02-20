@@ -1,3 +1,2 @@
 <?php
-echo "<a href="/public/">click me</a>";
- ?>
+header('Location: public/index.php');
