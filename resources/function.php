@@ -124,45 +124,46 @@ function fetch_array($result)
 
 function login()
 {
-    $username = escape_string($_POST['username']);
-    $password = escape_string($_POST['password']);
+    if (isset($_POST['submit'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-    $query = query("SELECT * FROM users WHERE username = '{$username}' AND password = '{$password}'");
+        $query = query("SELECT * FROM users WHERE username = '{$username}' AND password = '{$password}'");
 
-    confirm($query);
+        confirm($query);
+        $row = $query->fetch_array(MYSQLI_NUM);
 
-    $row = $query->fetch_array(MYSQLI_NUM);
+        $_SESSION['id']         = $row[0];
+        $_SESSION['username']   = $row[1];
+        $_SESSION['type']       = $row[3];
 
-    if (mysqli_num_rows($query) == 0) {
+        if (mysqli_num_rows($query) == 0) {
 
-        set_message("Username or Password is incorrect", "Login Failed", "error");
-        redirect("index.php?login&password=incorrect");
-    } else {
+            set_message("Username or Password is incorrect . $password . $username", "Login Failed", "error");
+            redirect("index.php?title=error");
+        } else {
 
-        $_SESSION['id']         = $row["id"];
-        $_SESSION['username']   = $row["username"];
-        $_SESSION['fullname']   = $row["fullname"];
-        $_SESSION['type']       = $row["type"];
 
-        if ($_SESSION['type'] == 'student') {
+            if ($_SESSION['type'] == 'student') {
 
-            // session message
-            set_message("Welcome {$_SESSION['fullname']}", "Welcome", "success");
-            redirect("student/index.php");
-        }
+                // session message
+                set_message("Welcome {$_SESSION['username']}", "Welcome", "success");
+                redirect("student/index.php");
+            }
 
-        if ($_SESSION['type'] == 'admin') {
+            if ($_SESSION['type'] == 'admin') {
 
-            // session message
-            set_message("Welcome {$_SESSION['fullname']}", "Welcome", "success");
-            redirect("admin/index.php");
-        }
+                // session message
+                set_message("Welcome {$_SESSION['username']}", "Welcome", "success");
+                redirect("admin/index.php");
+            }
 
-        if ($_SESSION['type'] == 'teacher') {
+            if ($_SESSION['type'] == 'teacher') {
 
-            // session message
-            set_message("Welcome {$_SESSION['fullname']}", "Welcome", "success");
-            redirect("teacher/index.php");
+                // session message
+                set_message("Welcome {$_SESSION['username']}", "Welcome", "success");
+                redirect("teacher/index.php");
+            }
         }
     }
 }
@@ -189,52 +190,58 @@ function logout()
 
 function register()
 {
-    $username       = escape_string($_POST['username']);
-    $email          = escape_string($_POST['email']);
-    $password       = escape_string($_POST['password']);
-    $type           = escape_string($_POST['type']);
+    // if the register button is clicked
+    if (isset($_POST['submit-register'])) {
 
-    $query = query("SELECT * FROM users WHERE username = '{$username}'");
+        $username       = escape_string($_POST['username']);
+        $email          = escape_string($_POST['email']);
+        $password       = escape_string($_POST['password']);
+        $type           = escape_string($_POST['type']);
 
-    confirm($query);
+        $query = query("SELECT * FROM users WHERE username = '{$username}'");
 
-    if (mysqli_num_rows($query) == 0) {
+        confirm($query);
 
-        if ($type == 'student') {
+        if (mysqli_num_rows($query) == 0) {
 
-            //session message
-            set_message("You Have Successfully Registered", "Successful", "success");
-            $query = query("INSERT INTO users(username, email, password, type) VALUES('{$username}', '{$email}', '{$password}', '{$type}')");
+            if ($type == '') {
 
-            confirm($query);
-            redirect("index.php?complete");
+                $type = 'student';
+
+                //session message
+                set_message("You Have Successfully Registered", "Successful", "success");
+                $query = query("INSERT INTO users(username, email, password, type) VALUES('{$username}', '{$email}', '{$password}', '{$type}')");
+
+                confirm($query);
+                redirect("index.php");
+            }
+
+            if ($type == 'admin') {
+
+                // session message 
+                set_message("You Have Successfully Registered", "Successful", "success");
+                $query = query("INSERT INTO users(username, email, password, type) VALUES('{$username}', '{$email}', '{$password}', '{$type}')");
+
+                confirm($query);
+                redirect("index.php");
+            }
+
+
+            if ($type == 'teacher') {
+
+                // session messsage
+                set_message("You Have Successfully Registered", "Successful", "success");
+                $query = query("INSERT INTO users(username, email, password, type) VALUES('{$username}', '{$email}', '{$password}', '{$type}')");
+
+                confirm($query);
+                redirect("index.php");
+            }
+        } else {
+
+            // session message
+            set_message("Username Already Exists", "Failed", "error");
+            redirect("index.php?error");
         }
-
-        if ($type == 'admin') {
-
-            // session message 
-            set_message("You Have Successfully Registered", "Successful", "success");
-            $query = query("INSERT INTO users(username, email, password, type) VALUES('{$username}', '{$email}', '{$password}', '{$type}')");
-
-            confirm($query);
-            redirect("index.php?complete");
-        }
-
-
-        if ($type == 'teacher') {
-
-            // session messsage
-            set_message("You Have Successfully Registered", "Successful", "success");
-            $query = query("INSERT INTO users(username, email, password, type) VALUES('{$username}', '{$email}', '{$password}', '{$type}')");
-
-            confirm($query);
-            redirect("index.php?complete");
-        }
-    } else {
-
-        // session message
-        set_message("Username Already Exists", "Failed", "error");
-        redirect("index.php?error");
     }
 }
 
